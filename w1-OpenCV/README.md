@@ -6,14 +6,14 @@
 ![soccer](https://github.com/user-attachments/assets/bdcf6215-f6ae-4ae1-8338-d4ea90fbe6f9)
 
 - output 
-![스크린샷 2025-03-04 210749](https://github.com/user-attachments/assets/d33e907b-28f4-4a63-839e-a6856d1277ea)
+
 
 
 
 ## 02 웹캠 영상에서 에지 검출
 - 웹캠을 사용하여 실시간 비디오 스트림을 가져온다.
 - 각 프레임에서 Canny Edge Detection을 적용하여 에지를검출하고 원본 영상과 함께 출력한다.
-![스크린샷 2025-03-04 210831](https://github.com/user-attachments/assets/67fdd1a5-c924-434d-8c80-0f17ea35cf75)
+![스크린샷 2025-03-04 210749](https://github.com/user-attachments/assets/d33e907b-28f4-4a63-839e-a6856d1277ea)
 
 
 ## 03 마우스로 영역 선택 및 ROI(관심영역) 추출

@@ -9,29 +9,30 @@ output
 ![스크린샷 2025-03-05 105655](https://github.com/user-attachments/assets/310d0b2b-4957-4487-bc3f-68ed4796bbbc)
 
 - cv.imread()를 사용해 이미지 로드
-```python
-src_img = cv.imread('soccer.jpg')
-```
+  ```python
+  src_img = cv.imread('soccer.jpg')
+  ```
 - cv.cvtColor() 함수를 사용해 이미지를 그레이스케일로 변환
   ```python
   result_img = cv.cvtColor(src_img, cv.COLOR_BGR2GRAY)
   ```
--np.stack() 함수를 이용해 원본 이미지와 그레이스케일 이미지를 가로로 연결해 출력
-```python
-  a = np.array(src_img)
-  b = np.array(result_img)
+- np.stack() 함수를 이용해 원본 이미지와 그레이스케일 이미지를 가로로 연결해 출력  
+  ```python
+    a = np.array(src_img)
+    b  = np.array(result_img)
 
-  b = cv.cvtColor(b, cv.COLOR_GRAY2BGR)   # 흑백 이미지를 3채널로 변환 
+    b = cv.cvtColor(b, cv.COLOR_GRAY2BGR)   # 흑백 이미지를 3채널로 변환 
 
-  c = np.hstack((a, b))
-  cv.imshow('Image Display', c)
+    c = np.hstack((a, b))
+    cv.imshow('Image Display', c)
   ```
 
-- cv.imshow()를 사용해 결과를 화면에 표시
+- cv.imshow()와 cv.waitKey()를 사용해 결과를 화면에 표시하고, 아무 키나 누르면 창이 닫히도록 할 것
   ```python
   cv.imshow('Image Display', c)
+  cv.waitKey()
   ```
-- cv.waitKey()
+
 ## 02 웹캠 영상에서 에지 검출
 - 웹캠을 사용하여 실시간 비디오 스트림을 가져온다.
 - 각 프레임에서 Canny Edge Detection을 적용하여 에지를검출하고 원본 영상과 함께 출력한다.

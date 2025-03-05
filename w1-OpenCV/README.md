@@ -59,15 +59,15 @@ output
   ```
 - 'q' 키를 누르면 영상 창이 종료
   ```python
-  while True:
+    while True:
   
      key = cv.waitKey(1)     
     
      if key == ord('q'):     
          break
     
- cap.release()           
- cv.destroyAllWindows()
+   cap.release()           
+   cv.destroyAllWindows()
   ```
 
 

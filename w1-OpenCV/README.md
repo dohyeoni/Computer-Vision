@@ -21,8 +21,8 @@ output
 - 선택한 영역만 따로 새로운 창에 출력하고, 저장한다.
 -
 <figure class="half">  
-  <a href="link"><img src="![스크린샷 2025-03-05 105359](https://github.com/user-attachments/assets/8cef5bc7-672b-447b-8080-c8cdf1b71c9a)"></a>  
-  <a href="link"><img src="![스크린샷 2025-03-05 105409](https://github.com/user-attachments/assets/96b8e2fc-7c23-435e-8a2b-c0e03210ff2b)
+  <a href="link"><img src="https://github.com/user-attachments/assets/8cef5bc7-672b-447b-8080-c8cdf1b71c9a"></a>  
+  <a href="link"><img src="https://github.com/user-attachments/assets/96b8e2fc-7c23-435e-8a2b-c0e03210ff2b
 "></a>  
 </figure>
 

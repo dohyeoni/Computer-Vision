@@ -2,10 +2,10 @@
 - OpenCV를 사용하여 이미지를 불러오고 화면에 출력한다.
 - 원본 이미지와 그레이스케일로 변환된 이미지를 나란히 표시한다.
 
-<input img>
+input img
 ![soccer](https://github.com/user-attachments/assets/bdcf6215-f6ae-4ae1-8338-d4ea90fbe6f9)
 
-<output> 
+output 
 ![스크린샷 2025-03-05 105655](https://github.com/user-attachments/assets/310d0b2b-4957-4487-bc3f-68ed4796bbbc)
 
 

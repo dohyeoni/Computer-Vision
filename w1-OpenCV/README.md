@@ -61,12 +61,12 @@ output
   ```python
   while True:
   
-     key = cv.waitKey(1)     # 1밀리초 동안 키보드 입력 기다림
+     key = cv.waitKey(1)     
     
-     if key == ord('q'):     # 'q' 키가 들어오면서 루프를 빠져나감
+     if key == ord('q'):     
          break
     
- cap.release()           # 카메라와 연결을 끊음
+ cap.release()           
  cv.destroyAllWindows()
   ```
 
@@ -75,16 +75,61 @@ output
 - 이미지를 불러오고 사용자가 마우스로 클릭하고 드래그하여 관심영역(ROI)을 선택한다.
 - 선택한 영역만 따로 새로운 창에 출력하고, 저장한다.
 
+- 이미지를 불러오고 화면에 출력
+  ```python
+   original_img = cv.imread('soccer.jpg')
+  ```
+
+
+
+- cv.setMouseCallback()을 사용하여 마우스 이벤트 처리
+  ```python
+   def draw(event, x, y, flags, param):        
+  ```
+- 사용자가 클릭한 시작점에서 드래그에하여 사각형을 그리며 영역을 선택
+ ```python
+   def draw(event, x, y, flags, param):        
+    global ix, iy, drawing, img, ROI
+    
+    if event == cv.EVENT_LBUTTONDOWN:       
+        drawing = True
+        ix, iy = x,y
+    
+    elif event == cv.EVENT_MOUSEMOVE:
+        if drawing:
+            tmp_img = img.copy()
+            cv.rectangle(tmp_img, (ix,iy), (x,y), (0,0,255), 2)
+            cv.imshow('Drawing', tmp_img)
+  ```
 ![스크린샷 2025-03-05 105359](https://github.com/user-attachments/assets/8cef5bc7-672b-447b-8080-c8cdf1b71c9a)
 ![스크린샷 2025-03-05 105409](https://github.com/user-attachments/assets/96b8e2fc-7c23-435e-8a2b-c0e03210ff2b)
-![스크린샷 2025-03-05 105424](https://github.com/user-attachments/assets/f76ce821-68b6-49ea-9ad6-b25ce2b95446)
-![스크린샷 2025-03-05 105439](https://github.com/user-attachments/assets/e804cf30-eff9-4d86-a046-9a947116a3d9)
 
-
-- 이미지를 불러오고 화면에 출력
-- cv.setMouseCallback()을 사용하여 마우스 이벤트 처리
-- 사용자가 클릭한 시작점에서 드래그에하여 사각형을 그리며 영역을 선택
 - 마우스를 놓으면 해당 영역을 잘라내서 별도의 창에 출력
+ ```python
+   # ROI 별도의 창에 출력
+        if ROI.shape[0] > 0 and ROI.shape[1] > 0:
+            cv.imshow('ROI', ROI)
+  ```
+![image](https://github.com/user-attachments/assets/db891a9b-e3cd-4df9-933a-45d21970afac)
+
 - 'r'키를 누르면 영역 선택을 리셋하고 처음부터 다시 선택
 - 's'키를 누르면 선택한 영역을 이미지 파일로 저장
-을
+  ```python
+   while(True):        
+    if cv.waitKey(1) == ord('q'):      
+        cv.destroyAllWindows()
+        break
+    
+    elif cv.waitKey(1) == ord('r'):     
+        img = original_img.copy()
+        ROI = None
+        cv.imshow('Drawing', img)
+    
+    elif cv.waitKey(1) == ord('s'):     
+        if ROI is not None and ROI.shape[0] > 0 and ROI.shape[1] > 0:
+            cv.imwrite('ROI.jpg', ROI)
+            print('ROI가 저장됨')
+  ```
+![스크린샷 2025-03-05 105439](https://github.com/user-attachments/assets/e804cf30-eff9-4d86-a046-9a947116a3d9)
+![스크린샷 2025-03-05 105424](https://github.com/user-attachments/assets/f76ce821-68b6-49ea-9ad6-b25ce2b95446)
+

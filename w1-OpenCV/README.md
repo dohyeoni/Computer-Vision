@@ -8,7 +8,10 @@ input img
 output 
 ![스크린샷 2025-03-05 105655](https://github.com/user-attachments/assets/310d0b2b-4957-4487-bc3f-68ed4796bbbc)
 
-
+- cv.imread()를 사용해 이미지 로드
+```python
+src_img = cv.imread('soccer.jpg')
+```
 
 ## 02 웹캠 영상에서 에지 검출
 - 웹캠을 사용하여 실시간 비디오 스트림을 가져온다.
@@ -20,11 +23,6 @@ output
 - 이미지를 불러오고 사용자가 마우스로 클릭하고 드래그하여 관심영역(ROI)을 선택한다.
 - 선택한 영역만 따로 새로운 창에 출력하고, 저장한다.
 -
-<figure class="half">  
-  <a href="link"><img src="https://github.com/user-attachments/assets/8cef5bc7-672b-447b-8080-c8cdf1b71c9a"></a>  
-  <a href="link"><img src="https://github.com/user-attachments/assets/96b8e2fc-7c23-435e-8a2b-c0e03210ff2b
-"></a>  
-</figure>
 
 ![스크린샷 2025-03-05 105359](https://github.com/user-attachments/assets/8cef5bc7-672b-447b-8080-c8cdf1b71c9a)
 ![스크린샷 2025-03-05 105409](https://github.com/user-attachments/assets/96b8e2fc-7c23-435e-8a2b-c0e03210ff2b)

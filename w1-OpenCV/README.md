@@ -27,7 +27,7 @@ output
     cv.imshow('Image Display', c)
   ```
 
-- cv.imshow()와 cv.waitKey()를 사용해 결과를 화면에 표시하고, 아무 키나 누르면 창이 닫히도록 할 것
+- cv.imshow()와 cv.waitKey()를 사용해 결과를 화면에 표시하고, 아무 키나 누르면 창이 닫히도록 함
   ```python
   cv.imshow('Image Display', c)
   cv.waitKey()
@@ -37,6 +37,38 @@ output
 - 웹캠을 사용하여 실시간 비디오 스트림을 가져온다.
 - 각 프레임에서 Canny Edge Detection을 적용하여 에지를검출하고 원본 영상과 함께 출력한다.
 ![스크린샷 2025-03-04 210749](https://github.com/user-attachments/assets/d33e907b-28f4-4a63-839e-a6856d1277ea)
+
+
+- cv.VideoCaapture()를 사용해 웹캠 영상을 로드
+  ```python
+  cap = cv.VideoCapture(0, cv.CAP_DSHOW)
+  ```
+
+- 각 프레임을 그레이스케일로 변환 후, cv.Canny()함수를 사용해 에지 검출 수행
+ ```python
+ gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    
+ a = np.array(frame)
+ b = cv.Canny(gray_frame, 100, 200)
+  ```
+- 원본 영상과 에지 검출 영상을 가로로 연결해 화면에 출력
+ ```python
+ c = np.hstack((a,b))
+    
+ cv.imshow('Image Display', c)
+  ```
+- 'q' 키를 누르면 영상 창이 종료
+  ```python
+  while True:
+  
+     key = cv.waitKey(1)     # 1밀리초 동안 키보드 입력 기다림
+    
+     if key == ord('q'):     # 'q' 키가 들어오면서 루프를 빠져나감
+         break
+    
+ cap.release()           # 카메라와 연결을 끊음
+ cv.destroyAllWindows()
+  ```
 
 
 ## 03 마우스로 영역 선택 및 ROI(관심영역) 추출

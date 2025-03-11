@@ -36,7 +36,7 @@ output
 ## 02 웹캠 영상에서 에지 검출
 - 웹캠을 사용하여 실시간 비디오 스트림을 가져온다.
 - 각 프레임에서 Canny Edge Detection을 적용하여 에지를검출하고 원본 영상과 함께 출력한다.
-![스크린샷 2025-03-04 210749](https://github.com/user-attachments/assets/d33e907b-28f4-4a63-839e-a6856d1277ea)
+![스크린샷 2025-03-11 172803](https://github.com/user-attachments/assets/1f3d1e08-60fb-461a-8efc-8481f220b11e)
 
 
 - cv.VideoCaapture()를 사용해 웹캠 영상을 로드

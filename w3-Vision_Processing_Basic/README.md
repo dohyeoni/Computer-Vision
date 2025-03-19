@@ -27,10 +27,10 @@
     ```
 
   #### 결과화면
-- 이진화 이미지
-![image](https://github.com/user-attachments/assets/cf72fee6-3749-46d0-8a36-53ec58706bb5)
+  - 이진화 이미지
+  ![image](https://github.com/user-attachments/assets/cf72fee6-3749-46d0-8a36-53ec58706bb5)
 
-- 히스토그램
+  - 히스토그램
   ![image](https://github.com/user-attachments/assets/7a8b23b6-4961-494f-a498-028d29c43c6f)
 
   
@@ -45,27 +45,27 @@
   - 주어진 이진화된 이미지에 대해 팽창(Dilation)침식(Erosion)열림(Open)닫힘(Close) 모폴로지 연산 적용
 
      #### 요구사항
-  - cv.getStructuringElement() 사용해 사각형 커널(5x5) 만들기
-    ```python
-      kernel = cv.getStructuringElement(cv.MORPH_RECT, (5, 5))
-    ```
-  - cv.morphologyEx() 사용해 각 모폴로지 연산 적용
-    ```python
-      b_dilation = cv.morphologyEx(image, cv.MORPH_DILATE, kernel)  # 팽창
-      b_erosion = cv.morphologyEx(image, cv.MORPH_ERODE, kernel)    # 침식
-      b_open = cv.morphologyEx(image, cv.MORPH_OPEN, kernel)        # 열림
-      b_close = cv.morphologyEx(image, cv.MORPH_CLOSE, kernel)      # 닫힘 
-    ```
-  - 원본 이미지와 모폴로지 연산 결과를 한 화면에 출력
-    ```python
-      result = np.hstack([image, b_dilation, b_erosion, b_open, b_close])
-      plt.imshow(result)
-      plt.show()
-    ```
+      - cv.getStructuringElement() 사용해 사각형 커널(5x5) 만들기
+        ```python
+          kernel = cv.getStructuringElement(cv.MORPH_RECT, (5, 5))
+        ```
+      - cv.morphologyEx() 사용해 각 모폴로지 연산 적용
+        ```python
+          b_dilation = cv.morphologyEx(image, cv.MORPH_DILATE, kernel)  # 팽창
+          b_erosion = cv.morphologyEx(image, cv.MORPH_ERODE, kernel)    # 침식
+          b_open = cv.morphologyEx(image, cv.MORPH_OPEN, kernel)        # 열림
+          b_close = cv.morphologyEx(image, cv.MORPH_CLOSE, kernel)      # 닫힘 
+        ```
+     - 원본 이미지와 모폴로지 연산 결과를 한 화면에 출력
+        ```python
+          result = np.hstack([image, b_dilation, b_erosion, b_open, b_close])
+          plt.imshow(result)
+          plt.show()
+        ```
 
 
     #### 결과 화면
-    ![image](https://github.com/user-attachments/assets/9a145993-6409-4145-88c0-0c30bb2e889b)
+      ![image](https://github.com/user-attachments/assets/9a145993-6409-4145-88c0-0c30bb2e889b)
 
 
 ---

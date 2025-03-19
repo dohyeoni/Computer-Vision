@@ -31,7 +31,11 @@
   ![image](https://github.com/user-attachments/assets/cf72fee6-3749-46d0-8a36-53ec58706bb5)
 
   - 히스토그램
-  ![image](https://github.com/user-attachments/assets/7a8b23b6-4961-494f-a498-028d29c43c6f)
+  -   binary
+     ![스크린샷 2025-03-19 120126](https://github.com/user-attachments/assets/54564406-fdd5-4de2-bf22-2f43abd19b44)
+
+  - gray
+      ![image](https://github.com/user-attachments/assets/7a8b23b6-4961-494f-a498-028d29c43c6f)
 
   
 
@@ -65,7 +69,8 @@
 
 
     #### 결과 화면
-      ![image](https://github.com/user-attachments/assets/9a145993-6409-4145-88c0-0c30bb2e889b)
+      ![image](https://github.com/user-attachments/assets/0294d190-e4e9-418c-b77c-8380cab66186)
+
 
 
 ---

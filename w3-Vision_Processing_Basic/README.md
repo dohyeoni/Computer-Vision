@@ -1,11 +1,12 @@
-### 01 이진화 및 히스토그램 구하기
+## 01 이진화 및 히스토그램 구하기
 ---
 
 - 주어진 이미지를 불러와서 다음을 수행
   1. 이미지를 그레이스케일로 변환
   2. 특정 임계값을 설정하여 이진화
   3. 이진화된 이미지의 히스토그램을 계산하고 시각화
- 
+
+  #### 요구사항
   - cv.imread() 사용해 이미지 불러오기
     ```python
       img = cv.imread('soccer.jpg', cv.IMREAD_GRAYSCALE)
@@ -37,3 +38,36 @@
 
 
 ---
+
+
+## 02 모폴로지 연산 적용하기
+---
+  - 주어진 이진화된 이미지에 대해 팽창(Dilation)침식(Erosion)열림(Open)닫힘(Close) 모폴로지 연산 적용
+
+     #### 요구사항
+  - cv.getStructuringElement() 사용해 사각형 커널(5x5) 만들기
+    ```python
+      kernel = cv.getStructuringElement(cv.MORPH_RECT, (5, 5))
+    ```
+  - cv.morphologyEx() 사용해 각 모폴로지 연산 적용
+    ```python
+      b_dilation = cv.morphologyEx(image, cv.MORPH_DILATE, kernel)  # 팽창
+      b_erosion = cv.morphologyEx(image, cv.MORPH_ERODE, kernel)    # 침식
+      b_open = cv.morphologyEx(image, cv.MORPH_OPEN, kernel)        # 열림
+      b_close = cv.morphologyEx(image, cv.MORPH_CLOSE, kernel)      # 닫힘 
+    ```
+  - 원본 이미지와 모폴로지 연산 결과를 한 화면에 출력
+    ```python
+      result = np.hstack([image, b_dilation, b_erosion, b_open, b_close])
+      plt.imshow(result)
+      plt.show()
+    ```
+
+
+    #### 결과 화면
+    ![image](https://github.com/user-attachments/assets/9a145993-6409-4145-88c0-0c30bb2e889b)
+
+
+---
+
+

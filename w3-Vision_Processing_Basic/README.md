@@ -71,3 +71,32 @@
 ---
 
 
+## 03 기하 연산 및 선형 보간 적용하기
+
+  - 주어진 이미지를 다음과 같이 변환하기
+    1. 이미지를 45도 회전
+    2. 회전된 이미지를 1.5배 확대
+    3. 회전 및 확대된 이미지에 선형 보간(Bilinear Interpolation)을적용하여부드럽게표현
+
+     #### 요구사항
+      - cv.getRotationMatrix2D()를 사용하여 회전 변환 행렬 생성
+        ```python
+          rotation = cv.getRotationMatrix2D(cp, 45, 1.5)      # 45도 회전, 1.5배 확대
+        ```
+      - cv.warpAffine()를 사용하여 이미지 회전 및 확대
+      - cv.INTER_LINEAR을 사용하여 선형 보간 적용
+        ```python
+          rows, cols = img.shape[:2]  # (높이, 너비, 채널수) 중 높이와 너비만 가져옴
+          dst = cv.warpAffine(img, rotation, (int(cols*1.5), int(rows*1.5)), flags=cv.INTER_LINEAR)
+        ```
+    - 원본 이미지와 회전 및 확대된 이미지를 한화면에 비교
+        ```python
+          result = np.hstack([img, dst_resize])
+          cv.imshow('Result', result)
+        ```
+
+
+    #### 결과 화면
+      ![image](https://github.com/user-attachments/assets/dac95821-1230-4f5c-b097-bcba5d412e04)
+
+    

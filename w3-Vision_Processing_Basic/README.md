@@ -31,14 +31,12 @@
   ![image](https://github.com/user-attachments/assets/cf72fee6-3749-46d0-8a36-53ec58706bb5)
 
   - 히스토그램
+ 
+    <p align="center">
+      <img src="![스크린샷 2025-03-19 120126](https://github.com/user-attachments/assets/54564406-fdd5-4de2-bf22-2f43abd19b44)" alt="binary" width="300">
+      <img src="![image](https://github.com/user-attachments/assets/7a8b23b6-4961-494f-a498-028d29c43c6f)" alt="gray" width="300">
+    </p>
     
-    -   binary
-     ![스크린샷 2025-03-19 120126](https://github.com/user-attachments/assets/54564406-fdd5-4de2-bf22-2f43abd19b44)
-
-    - gray
-      
-      ![image](https://github.com/user-attachments/assets/7a8b23b6-4961-494f-a498-028d29c43c6f)
-
   
 
 

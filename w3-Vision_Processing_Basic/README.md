@@ -21,8 +21,16 @@
     ```
   - cv.calcHist() 사용해 히스토그램 계산 + matplotlib로 시각화
     ```python
+      # Grayscale
       gray_hist = cv.calcHist([gray], [0], None, [256], [0, 256])
       plt.plot(gray_hist, color='r', linewidth=1)
+      plt.title('Grayscale Image Histogram')
+      plt.show()
+      
+      # Binary Image
+      bin_hist = cv.calcHist([bin_img], [0], None, [256], [0, 256])
+      plt.plot(bin_hist, color='r', linewidth=1)
+      plt.title('Binary Image Histogram')
       plt.show()
     ```
 

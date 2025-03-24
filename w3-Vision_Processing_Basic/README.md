@@ -33,8 +33,8 @@
   - 히스토그램
  
     <p align="center">
-      <img src="![스크린샷 2025-03-19 120126](https://github.com/user-attachments/assets/54564406-fdd5-4de2-bf22-2f43abd19b44)" alt="binary" width="300">
-      <img src="![image](https://github.com/user-attachments/assets/7a8b23b6-4961-494f-a498-028d29c43c6f)" alt="gray" width="300">
+      <img src="https://github.com/user-attachments/assets/c864347f-a269-4868-bd5a-96ca09fc4de8" alt="binary" width="300">
+      <img src="https://github.com/user-attachments/assets/674ed18b-81d2-4135-a03c-f42e90adf87f" alt="gray" width="300">
     </p>
     
   

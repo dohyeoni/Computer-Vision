@@ -104,6 +104,7 @@
 
 
     #### 결과 화면
-      ![image](https://github.com/user-attachments/assets/dac95821-1230-4f5c-b097-bcba5d412e04)
+      ![image](https://github.com/user-attachments/assets/5611404c-e553-41a0-a8b4-0f083a21d5a7)
+
 
     

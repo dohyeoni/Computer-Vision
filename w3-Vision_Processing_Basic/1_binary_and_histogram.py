@@ -11,12 +11,16 @@ if img is None:
 t, bin_img = cv.threshold(img, 127, 255, cv.THRESH_BINARY)
 cv.imshow('Channel binarization', bin_img)
 
-# hist = cv.calcHist([img], [0], None, [256], [0, 256])
-# plt.plot(hist, color='r', linewidth=1)
-# plt.show()
-
+# Grayscale
 gray_hist = cv.calcHist([gray], [0], None, [256], [0, 256])
 plt.plot(gray_hist, color='r', linewidth=1)
+plt.title('Grayscale Image Histogram')
+plt.show()
+
+# Binary Image
+bin_hist = cv.calcHist([bin_img], [0], None, [256], [0, 256])
+plt.plot(bin_hist, color='r', linewidth=1)
+plt.title('Binary Image Histogram')
 plt.show()
 
 cv.waitKey()

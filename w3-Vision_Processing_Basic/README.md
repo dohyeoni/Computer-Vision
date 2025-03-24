@@ -36,11 +36,11 @@
       <tr>
         <td align="center">
             <img src="https://github.com/user-attachments/assets/c864347f-a269-4868-bd5a-96ca09fc4de8" alt="binary" width="300"><br>
-            <b>Binary</b>
+            <b>Gray</b>
         </td>
         <td align="center">
             <img src="https://github.com/user-attachments/assets/674ed18b-81d2-4135-a03c-f42e90adf87f" alt="gray" width="300"><br>
-            <b>Gray</b>
+            <b>Binary</b>
         </td>
       </tr>
     </table>

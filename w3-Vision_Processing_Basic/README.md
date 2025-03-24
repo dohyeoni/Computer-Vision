@@ -33,8 +33,14 @@
   - 히스토그램
  
     <p align="center">
-      <img src="https://github.com/user-attachments/assets/c864347f-a269-4868-bd5a-96ca09fc4de8" alt="binary" width="300">
-      <img src="https://github.com/user-attachments/assets/674ed18b-81d2-4135-a03c-f42e90adf87f" alt="gray" width="300">
+      <figure>
+        <img src="https://github.com/user-attachments/assets/c864347f-a269-4868-bd5a-96ca09fc4de8" alt="binary" width="300">
+        <figcation align="center">Binary</figcation>
+      </figure>
+      <figure>
+        <img src="https://github.com/user-attachments/assets/674ed18b-81d2-4135-a03c-f42e90adf87f" alt="gray" width="300">
+        <figcation align="center">Gray</figcation>
+      </figure>
     </p>
     
   

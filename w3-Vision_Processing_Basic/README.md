@@ -70,14 +70,22 @@
         ```
      - 원본 이미지와 모폴로지 연산 결과를 한 화면에 출력
         ```python
-          result = np.hstack([image, b_dilation, b_erosion, b_open, b_close])
-          plt.imshow(result)
-          plt.show()
+          images = [image, b_dilation, b_erosion, b_open, b_close]
+          titles = ['Original','Dilation', 'Erosion', 'Open', 'Close']
+
+          # 서브플롯 생성 (1행 5열)
+          fig, axes = plt.subplots(1, 5, figsize=(15, 5))
+
+          for i, ax in enumerate(axes):
+            ax.imshow(images[i], cmap='gray')
+            ax.set_title(titles[i], fontsize=12)
+            ax.axis('off')
         ```
 
 
     #### 결과 화면
-      ![image](https://github.com/user-attachments/assets/0294d190-e4e9-418c-b77c-8380cab66186)
+      ![스크린샷 2025-03-24 234448](https://github.com/user-attachments/assets/9d7b46fa-2174-4d67-bda9-170646233ed7)
+
 
 
 

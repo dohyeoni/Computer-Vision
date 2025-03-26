@@ -93,12 +93,17 @@
 
     #### 요구사항
      - cv.grabCut()를 사용해 대화식 분할을 수행
-       ```python
-              cv.grabCut(src, mask, (x, y, w, h), bgdModel, fgdModel, iterCount, mode)
-       ```
      - 초기 사각형 영역은 (x, y, width, height) 형식으로 설정
        ```python
-              canny = cv.Canny(gray, 100, 200)
+            src = skimage.data.coffee()
+            mask = np.zeros(src.shape[:2], np.uint8)
+            bgdModel = np.zeros((1, 65), np.float64)
+            fgdModel = np.zeros((1, 65), np.float64)
+            iterCount = 1
+            mode = cv.GC_INIT_WITH_RECT
+            rc = (100, 100, 200, 200)
+            
+            cv.grabCut(src, mask, rc, bgdModel, fgdModel, iterCount, mode)
        ```
      - 마스크를 사용해 원본 이미지에서 배경 제거
        ```python
@@ -151,5 +156,6 @@
        ```
 
   #### 결과 화면
-  ![image](https://github.com/user-attachments/assets/cb19d091-07e5-4352-8547-550c10320c52)
+  ![image](https://github.com/user-attachments/assets/f3cf3954-47b0-4c5e-b0aa-df23e3de0310)
+
 

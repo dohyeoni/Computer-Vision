@@ -40,7 +40,7 @@
       ```
           
   #### 결과 화면
-      ![image](https://github.com/user-attachments/assets/a10555c1-a931-400a-b76f-1d7817a023a6)
+  ![image](https://github.com/user-attachments/assets/a10555c1-a931-400a-b76f-1d7817a023a6)
 
 ---
       
@@ -50,25 +50,24 @@
 - 허프변환(Hough Transform)을 사용해 이미지에서 직선을 검출
 - 검출된 직선을 원본이미지에 빨간색으로 표시
 
-    #### 요구사항 
-      - cv.Canny()를 사용해 에지맵 생성
-          ```python
+    #### 요구사항
+    - cv.Canny()를 사용해 에지맵 생성
+       ```python
               canny = cv.Canny(gray, 100, 200)
-          ```
-      - cv.HoughLinesP()를 사용해 직선을 검출
-        ```python
+       ```
+    - cv.HoughLinesP()를 사용해 직선을 검출
+      ```python
               lines = cv.HoughLinesP(canny, 1, np.pi/180, 50, minLineLength=10, maxLineGap=1)
-          ```
-    
-      - cv.line()을 사용해 검출된 직선을 원본 이미지에 그리기
-          ```python
+      ```
+    - cv.line()을 사용해 검출된 직선을 원본 이미지에 그리기
+      ```python
               if lines is not None:
                 for line in lines:
                     x1, y1, x2, y2 = line[0]
                     cv.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2, cv.LINE_AA)
-          ```
-      - matplotlib를 사용해 원본 이미지와 직선이 그려진 이미지를 나란히 시각화
-          ```python
+      ```
+    - matplotlib를 사용해 원본 이미지와 직선이 그려진 이미지를 나란히 시각화
+      ```python
               plt.subplot(1, 2, 1)
               plt.imshow(gray, cmap='gray')
               plt.title('Original')
@@ -80,10 +79,10 @@
               plt.axis('off')
             
               plt.show()
-          ```
+      ```
 
-    #### 결과 화면
-      ![image](https://github.com/user-attachments/assets/24395420-67bc-433a-b08e-681388f758a5)
+  #### 결과 화면
+  ![image](https://github.com/user-attachments/assets/24395420-67bc-433a-b08e-681388f758a5)
 
 ---
 
@@ -94,19 +93,19 @@
 
     #### 요구사항
      - cv.grabCut()를 사용해 대화식 분할을 수행
-          ```python
+       ```python
               cv.grabCut(src, mask, (x, y, w, h), bgdModel, fgdModel, iterCount, mode)
-          ```
+       ```
      - 초기 사각형 영역은 (x, y, width, height) 형식으로 설정
-           ```python
+       ```python
               canny = cv.Canny(gray, 100, 200)
-          ```
+       ```
      - 마스크를 사용해 원본 이미지에서 배경 제거
-           ```python
+       ```python
               canny = cv.Canny(gray, 100, 200)
-          ```
+       ```
      - matplotlib를 사용해 원본이미지, 마스크 이미지, 배경 제거 이미지 세 개를 나란히 시각화
-           ```python
-              canny = cv.Canny(gray, 100, 200)
-          ```
+       ```python
+             canny = cv.Canny(gray, 100, 200)
+       ```
   

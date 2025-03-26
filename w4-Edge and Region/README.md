@@ -5,6 +5,7 @@
 - 검출된 에지 강도(edge strength) 이미지를 시각화
 
     ### 요구사항
+  
       - cv.imread()를 사용해 이미지 불러오기
           ```python
               img = cv.imread('soccer.jpg')

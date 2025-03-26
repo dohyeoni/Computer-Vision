@@ -102,10 +102,51 @@
        ```
      - 마스크를 사용해 원본 이미지에서 배경 제거
        ```python
-              canny = cv.Canny(gray, 100, 200)
+              mask2 = np.where((mask == 0) | (mask == 2), 0, 1).astype('uint8')
+dst = src * mask2[:, :, np.newaxis]
+
+cv.imshow('dst', dst)
+
+def on_mouse(event, x, y, flags, param):
+    if event == cv.EVENT_LBUTTONDOWN:
+        cv.circle(dst, (x, y), 3, (255, 0, 0), -1)
+        cv.circle(mask, (x, y), 3, cv.GC_FGD, -1)
+        cv.imshow('dst', dst)
+    elif event == cv.EVENT_RBUTTONDOWN:
+        cv.circle(dst, (x, y), 3, (0, 0, 255), -1)
+        cv.circle(mask, (x, y), 3, cv.GC_BGD, -1)
+        cv.imshow('dst', dst)
+    elif event == cv.EVENT_MOUSEMOVE:
+        if flags & cv.EVENT_FLAG_LBUTTON:
+            cv.circle(dst, (x, y), 3, (255, 0, 0), -1)
+            cv.circle(mask, (x, y), 3, cv.GC_FGD, -1)
+            cv.imshow('dst', dst)
+        elif flags & cv.EVENT_FLAG_RBUTTON:
+            cv.circle(dst, (x, y), 3, (0, 0, 255), -1)
+            cv.circle(mask, (x, y), 3, cv.GC_BGD, -1)
+            cv.imshow('dst', dst)
+            
+cv.setMouseCallback('dst', on_mouse)
        ```
      - matplotlib를 사용해 원본이미지, 마스크 이미지, 배경 제거 이미지 세 개를 나란히 시각화
        ```python
-             canny = cv.Canny(gray, 100, 200)
+             plt.figure(figsize=(15, 5))
+
+            plt.subplot(1, 3, 1)
+            plt.imshow(cv.cvtColor(src, cv.COLOR_BGR2RGB))
+            plt.title('Original')
+            plt.axis('off')
+            
+            plt.subplot(1, 3, 2)
+            plt.imshow(mask, cmap='gray')
+            plt.title('Mask')
+            plt.axis('off')
+            
+            plt.subplot(1, 3, 3)
+            plt.imshow(cv.cvtColor(dst, cv.COLOR_BGR2RGB))
+            plt.title('Background Removed')
+            plt.axis('off')
+
+plt.show()
        ```
   

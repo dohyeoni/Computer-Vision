@@ -4,17 +4,14 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 src = skimage.data.coffee()
-
 mask = np.zeros(src.shape[:2], np.uint8)
 bgdModel = np.zeros((1, 65), np.float64)
 fgdModel = np.zeros((1, 65), np.float64)
 iterCount = 1
 mode = cv.GC_INIT_WITH_RECT
+rc = (100, 100, 200, 200)
 
-rc = cv.selectROI(src)
-x, y, w, h = rc
-
-cv.grabCut(src, mask, (x, y, w, h), bgdModel, fgdModel, iterCount, mode)
+cv.grabCut(src, mask, rc, bgdModel, fgdModel, iterCount, mode)
 
 mask2 = np.where((mask == 0) | (mask == 2), 0, 1).astype('uint8')
 dst = src * mask2[:, :, np.newaxis]
@@ -45,7 +42,7 @@ cv.setMouseCallback('dst', on_mouse)
 while True:
     key = cv.waitKey()
     if key == 13:
-        cv.grabCut(src, mask, (x, y, w, h), bgdModel, fgdModel, 1, cv.GC_INIT_WITH_MASK)
+        cv.grabCut(src, mask, rc, bgdModel, fgdModel, 1, cv.GC_INIT_WITH_MASK)
         mask2 = np. where((mask == 2) | (mask == 0), 0, 1).astype('uint8')
         dst = src * mask2[:, :, np.newaxis]
         cv.imshow('dst', dst)

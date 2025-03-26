@@ -5,7 +5,6 @@
 - 검출된 에지 강도(edge strength) 이미지를 시각화
 
     ### 요구사항
-  
       - cv.imread()를 사용해 이미지 불러오기
           ```python
               img = cv.imread('soccer.jpg')
@@ -42,4 +41,24 @@
   ### 결과 화면
       ![image](https://github.com/user-attachments/assets/a10555c1-a931-400a-b76f-1d7817a023a6)
 
+---
       
+# 02. 캐니 에지 및 허프 변환을 이용한 직선 검출
+
+- 캐니(Canny) 에지검출을 사용해 에지맵을 생성
+- 허프변환(Hough Transform)을 사용해 이미지에서 직선을 검출
+- 검출된 직선을 원본이미지에 빨간색으로 표시
+
+    ## 요구사항
+      - cv.Canny()를 사용해 에지맵 생성
+      - cv.HoughLinesP()를 사용해 직선을 검출
+      - cv.line()을 사용해 검출된 직선을 원본 이미지에 그리기
+      - matplotlib를 사용해 원본 이미지와 직선이 그려진 이미지를 나란히 시각화
+
+    ## 결과 화면
+      ![image](https://github.com/user-attachments/assets/24395420-67bc-433a-b08e-681388f758a5)
+
+---
+
+# 03. GrabCut을 이용한 대화식 영역 분할 및 객체 추출
+  

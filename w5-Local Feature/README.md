@@ -145,6 +145,10 @@
             for nearest1, nearest2 in flann_knn_match:
                 if(nearest1.distance/nearest2.distance)<T:
                     flann_good_match.append(nearest1)
+
+           img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
+           flann_img = cv.drawMatches(img1, kp1, img2, kp2, flann_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
       ```
     - cv.findHomography()를 사용하여 호모그래피 행렬을 계산
       ```python

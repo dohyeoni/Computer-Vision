@@ -38,6 +38,11 @@
           
   #### 결과 화면
   ![image](https://github.com/user-attachments/assets/0e5138a2-633b-4a8a-8d69-e05b1798c0f9)
+  ###### 원의 크기의 의미
+  ![image](https://github.com/user-attachments/assets/5a6db344-4972-4e24-80be-aa6d4738829c)
+      -출처: https://docs.opencv.org/4.x/da/df5/tutorial_py_sift_intro.html
+
+  
 
 
 ---

@@ -63,22 +63,17 @@ cv.destroyAllWindows()
 
 plt.figure(figsize=(18, 8))
 
-# plt.subplot(1, 4, 1)
+# plt.subplot(1, 3, 1)
 # plt.imshow(cv.cvtColor(img1, cv.COLOR_BGR2RGB))
 # plt.title('img1.jpg')
 # plt.axis('off')
 
-# plt.subplot(1, 4, 2)
+# plt.subplot(1, 3, 2)
 # plt.imshow(cv.cvtColor(img2, cv.COLOR_BGR2RGB))
 # plt.title('img2.jpg')
 # plt.axis('off')
 
-# plt.subplot(1, 4, 3)
-# plt.imshow(cv.cvtColor(bf_img, cv.COLOR_BGR2RGB))
-# plt.title('BFMatcher')
-# plt.axis('off')
-
-# plt.subplot(1, 4, 4)
+# plt.subplot(1, 3, 3)
 # plt.imshow(cv.cvtColor(blend, cv.COLOR_BGR2RGB))
 # plt.title('Alignment')
 # plt.axis('off')

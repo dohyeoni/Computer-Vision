@@ -159,19 +159,46 @@
       ```
     - cv.warpPerspective()를 사용하여 한 이미지를 변환하여 다른 이미지와 정렬
       ```python
-            img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
-            bf_img = cv.drawMatches(img1, kp1, img2, kp2, bf_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-            flann_img = cv.drawMatches(img1, kp1, img2, kp2, falnn_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+            h1, w1 = img1.shape[:2]
+            corners1 = np.float32([[0, 0], [w1, 0], [w1, h1], [0, h1]]).reshape(-1, 1, 2)
+            transformed_corners1 = cv.perspectiveTransform(corners1, H)
+            
+            
+            h2, w2 = img2.shape[:2]
+            corners2 = np.float32([[0, 0], [w2, 0], [w2, h2], [0, h2]]).reshape(-1, 1, 2)
+            
+            all_corners = np.concatenate((transformed_corners1, corners2), axis=0)
+            [x_min, y_min] = np.int32(all_corners.min(axis=0).ravel() - 10)
+            [x_max, y_max] = np.int32(all_corners.max(axis=0).ravel() + 10)
+            
+            new_width = x_max - x_min
+            new_height = y_max - y_min
+            
+            translation_matrix = np.array([[1, 0, -x_min], [0, 1, -y_min], [0, 0, 1]]) 
+            H_translated = translation_matrix @ H
+            
+            img1_aligned = cv.warpPerspective(img1, H_translated, (new_width, new_height))
 
       ```
     - 변환된 이미지를 원본 이미지와 비교하여 출력
       ```python
-            img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
-            bf_img = cv.drawMatches(img1, kp1, img2, kp2, bf_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-            flann_img = cv.drawMatches(img1, kp1, img2, kp2, falnn_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+            plt.subplot(1, 2, 1)
+            plt.imshow(cv.cvtColor(flann_img, cv.COLOR_BGR2RGB))
+            plt.title('Flann Matcher')
+            plt.axis('off')
+            
+            plt.subplot(1, 2, 2)
+            plt.imshow(cv.cvtColor(blend, cv.COLOR_BGR2RGB))
+            plt.title('Alignment')
+            plt.axis('off')
+            
+            plt.show()
 
       ```
 
 
   #### 결과 화면
-  ![image](https://github.com/user-attachments/assets/591de309-06f5-44a7-a597-5b37b3b21356)
+  ![image](https://github.com/user-attachments/assets/54086277-e4ee-4dd3-aca2-29961c401809)
+  ![image](https://github.com/user-attachments/assets/62c911ac-9595-4b95-923c-2e35602b7d3e)
+
+

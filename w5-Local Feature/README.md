@@ -61,8 +61,55 @@
     - cv.BFMatcher() 또는 cv.FlannBasedMatcher()를 사용하여 두 영상 간 특징점 매칭
       ```python
             bf_matcher = cv.BFMatcher(cv.NORM_L2, crossCheck=True)
-            bf_match = bf_matcher.match(체
-  ![image](https://github.com/user-attachments/assets/9a226d07-96ca-4420-a827-3e28461f2d0a)
+            bf_match = bf_matcher.match(des1, des2)
+            
+            FLANN_INDEX_KDTREE = 1
+            index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
+            search_params = dict(checks=50)
+            
+            flann_matcher = cv.FlannBasedMatcher(index_params, search_params)    # FlannBasedMatcher() 사용
+            flann_knn_match = flann_matcher.knnMatch(des1, des2, k=2)
+            
+            
+            T=0.7
+            bf_good_match = []
+            for match in bf_match:
+                bf_good_match.append(match)
+            print('BF 매칭에 걸린 시간: ', time.time()-start)
+            
+            falnn_good_match = []
+            for nearest1, nearest2 in flann_knn_match:
+                if(nearest1.distance/nearest2.distance)<T:
+                    falnn_good_match.append(nearest1)
+            print('Flann 매칭에 걸린 시간: ', time.time()-start)
+    -  cv.drawMatches()를 사용하여 매칭결과 시각화
+      ```python
+                img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
+                bf_img = cv.drawMatches(img1, kp1, img2, kp2, bf_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+                flann_img = cv.drawMatches(img1, kp1, img2, kp2, falnn_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
+      ```
+    - matplotlib을 이용하여 매칭결과 출력
+      ```python
+            plt.figure(figsize=(10, 5))
+
+            plt.subplot(1, 2, 1)
+            plt.imshow(cv.cvtColor(bf_img, cv.COLOR_BGR2RGB))
+            plt.title('BFMatcher')
+            plt.axis('off')
+            
+            plt.subplot(1, 2, 2)
+            plt.imshow(cv.cvtColor(flann_img, cv.COLOR_BGR2RGB))
+            plt.title('FlannBasedMatcher')
+            plt.axis('off')
+            
+            plt.show()
+      ```
+
+
+  #### 결과 화면
+  ![image](https://github.com/user-attachments/assets/591de309-06f5-44a7-a597-5b37b3b21356)
+
 
 
 

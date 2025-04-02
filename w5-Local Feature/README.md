@@ -42,45 +42,76 @@
 
 ---
       
-# 02. 캐니 에지 및 허프 변환을 이용한 직선 검출
+# 02. SIFT를 이용한 두 영상 간 특징점 매칭
 
-- 캐니(Canny) 에지검출을 사용해 에지맵을 생성
-- 허프변환(Hough Transform)을 사용해 이미지에서 직선을 검출
-- 검출된 직선을 원본이미지에 빨간색으로 표시
+- 두 개의 이미지를 입력받아 SIFT 특징점 기반으로 매칭을 수행하고 결과를 시각화하기
 
     #### 요구사항
-    - cv.Canny()를 사용해 에지맵 생성
+    - cv.imread()를 사용하여 두 개의 이미지 불러오기
        ```python
-              canny = cv.Canny(gray, 100, 200)
+              img1 = cv.imread('mot_color70.jpg')[190:350, 440:560]
+              gray1 = cv.cvtColor(img1, cv.COLOR_BGR2GRAY)
+              img2 = cv.imread('mot_color83.jpg')
+              gray2 = cv.cvtColor(img2, cv.COLOR_BGR2GRAY)
        ```
-    - cv.HoughLinesP()를 사용해 직선을 검출
+    - cv.SIFT_create()를 사용하여 특징점 추출
       ```python
-              lines = cv.HoughLinesP(canny, 1, np.pi/180, 50, minLineLength=10, maxLineGap=1)
+              sift = cv.SIFT_create()
       ```
-    - cv.line()을 사용해 검출된 직선을 원본 이미지에 그리기
+    - cv.BFMatcher() 또는 cv.FlannBasedMatcher()를 사용하여 두 영상 간 특징점 매칭
       ```python
-              if lines is not None:
-                for line in lines:
-                    x1, y1, x2, y2 = line[0]
-                    cv.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2, cv.LINE_AA)
+            bf_matcher = cv.BFMatcher(cv.NORM_L2, crossCheck=True)
+            bf_match = bf_matcher.match(des1, des2)
+            
+            FLANN_INDEX_KDTREE = 1
+            index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
+            search_params = dict(checks=50)
+            
+            flann_matcher = cv.FlannBasedMatcher(index_params, search_params)    # FlannBasedMatcher() 사용
+            flann_knn_match = flann_matcher.knnMatch(des1, des2, k=2)
+            
+            T=0.7
+            bf_good_match = []
+            for match in bf_match:
+                bf_good_match.append(match)
+            print('BF 매칭에 걸린 시간: ', time.time()-start)
+            
+            falnn_good_match = []
+            for nearest1, nearest2 in flann_knn_match:
+                if(nearest1.distance/nearest2.distance)<T:
+                    falnn_good_match.append(nearest1)
+            print('Flann 매칭에 걸린 시간: ', time.time()-start)
+            
+            
+           
+      ```
+    - cv.drawMatches()를 사용하여 매칭결과 시각화
+      ```python
+               img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
+            bf_img = cv.drawMatches(img1, kp1, img2, kp2, bf_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+            flann_img = cv.drawMatches(img1, kp1, img2, kp2, falnn_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
       ```
     - matplotlib를 사용해 원본 이미지와 직선이 그려진 이미지를 나란히 시각화
       ```python
-              plt.subplot(1, 2, 1)
-              plt.imshow(gray, cmap='gray')
-              plt.title('Original')
-              plt.axis('off')
+            plt.figure(figsize=(10, 5))
+
+            plt.subplot(1, 2, 1)
+            plt.imshow(cv.cvtColor(bf_img, cv.COLOR_BGR2RGB))
+            plt.title('BFMatcher')
+            plt.axis('off')
             
-              plt.subplot(1, 2, 2)
-              plt.imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB))
-              plt.title('Hough Lines')
-              plt.axis('off')
+            plt.subplot(1, 2, 2)
+            plt.imshow(cv.cvtColor(flann_img, cv.COLOR_BGR2RGB))
+            plt.title('FlannBasedMatcher')
+            plt.axis('off')
             
-              plt.show()
+            plt.show()
       ```
 
   #### 결과 화면
-  ![image](https://github.com/user-attachments/assets/24395420-67bc-433a-b08e-681388f758a5)
+  ![image](https://github.com/user-attachments/assets/5a2c79f1-662c-41dd-9619-969343484cb2)
+
 
 ---
 

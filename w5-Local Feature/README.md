@@ -87,9 +87,6 @@
             img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
             bf_img = cv.drawMatches(img1, kp1, img2, kp2, bf_good_match, img_match,     flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
             flann_img = cv.drawMatches(img1, kp1, img2, kp2, falnn_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-
-
-
       ```
     - matplotlib을 이용하여 매칭결과 출력
       ```python

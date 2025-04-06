@@ -165,7 +165,7 @@
       ```
     - cv.warpPerspective()를 사용하여 한 이미지를 변환하여 다른 이미지와 정렬
       ```python
-            h1, w1 = img1.shape[:2]    # img1 모서리도 정의
+            h1, w1 = img1.shape[:2]    # img1 모서리 정의
             corners1 = np.float32([[0, 0], [w1, 0], [w1, h1], [0, h1]]).reshape(-1, 1, 2)
             transformed_corners1 = cv.perspectiveTransform(corners1, H)
             

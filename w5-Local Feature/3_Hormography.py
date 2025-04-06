@@ -12,7 +12,17 @@ sift = cv.SIFT_create()
 kp1, des1 = sift.detectAndCompute(gray1, None)
 kp2, des2 = sift.detectAndCompute(gray2, None)
 
+# bf_matcher = cv.BFMatcher(cv.NORM_L2, crossCheck=True)
+# bf_match = bf_matcher.match(des1, des2)
+
 T=0.7
+# bf_good_match = []
+# for match in bf_match:
+#     bf_good_match.append(match)
+
+# img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
+# bf_img = cv.drawMatches(img1, kp1, img2, kp2, bf_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
 FLANN_INDEX_KDTREE = 1
 index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
 search_params = dict(checks=50)
@@ -28,64 +38,75 @@ for nearest1, nearest2 in flann_knn_match:
 img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
 flann_img = cv.drawMatches(img1, kp1, img2, kp2, flann_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
+# 매칭된 특징점의 좌표 추출 
 points1 = np.float32([kp1[m.queryIdx].pt for m in flann_good_match])
 points2 = np.float32([kp2[m.trainIdx].pt for m in flann_good_match])
 
-H,_= cv.findHomography(points1, points2, cv.RANSAC)
+H,_= cv.findHomography(points1, points2, cv.RANSAC)     # 호모그래피 행렬 H: img1을 img2에 맞게 변형시킬 수 있는 변환 행렬 계산 
 
 h1, w1 = img1.shape[:2]
-corners1 = np.float32([[0, 0], [w1, 0], [w1, h1], [0, h1]]).reshape(-1, 1, 2)
+corners1 = np.float32([[0, 0], [w1, 0], [w1, h1], [0, h1]]).reshape(-1, 1, 2)   #img1의 네 모서리를 H 행렬로 변형 
 transformed_corners1 = cv.perspectiveTransform(corners1, H)
 
 
 h2, w2 = img2.shape[:2]
 corners2 = np.float32([[0, 0], [w2, 0], [w2, h2], [0, h2]]).reshape(-1, 1, 2)
 
+# 두 이미지의 전체 범위를 감싸는 새로운 캔버스 크기 계산 
 all_corners = np.concatenate((transformed_corners1, corners2), axis=0)
 [x_min, y_min] = np.int32(all_corners.min(axis=0).ravel() - 10)
 [x_max, y_max] = np.int32(all_corners.max(axis=0).ravel() + 10)
 
+# 평행이동 변환 행렬 적용 (좌표가 음수가 되지 않도록) 
 new_width = x_max - x_min
 new_height = y_max - y_min
 
 translation_matrix = np.array([[1, 0, -x_min], [0, 1, -y_min], [0, 0, 1]]) 
 H_translated = translation_matrix @ H
 
+img1_aligned = cv.warpPerspective(img1, H_translated, (new_width, new_height))  # img1을 변환해서 새로운 좌표계에 맞게 정렬 
+
 cv.imshow('Warped Image', img1_aligned)
 
-img2_translated = np.zeros((new_height, new_width, 3), dtype=np.uint8)
+img2_translated = np.zeros((new_height, new_width, 3), dtype=np.uint8)      # img2도 정렬된 좌표계에 맞게 새로운 캔버스에 복사  
 img2_translated[-y_min:h2 - y_min, -x_min:w2 - x_min] = img2
 
-blend = cv.addWeighted(img1_aligned, 0.5, img2_translated, 0.5, 0)
+blend = cv.addWeighted(img1_aligned, 0.5, img2_translated, 0.5, 0)  # 두 이미지를 반추명하게 합성해서 -> 겹쳐서 표시 
 cv.imshow('Blended Image', blend)
 
+# k=cv.waitKey()
 cv.destroyAllWindows()
 
 plt.figure(figsize=(18, 8))
 
-# plt.subplot(1, 3, 1)
-# plt.imshow(cv.cvtColor(img1, cv.COLOR_BGR2RGB))
-# plt.title('img1.jpg')
-# plt.axis('off')
-
-# plt.subplot(1, 3, 2)
-# plt.imshow(cv.cvtColor(img2, cv.COLOR_BGR2RGB))
-# plt.title('img2.jpg')
-# plt.axis('off')
-
-# plt.subplot(1, 3, 3)
-# plt.imshow(cv.cvtColor(blend, cv.COLOR_BGR2RGB))
-# plt.title('Alignment')
-# plt.axis('off')
-
-plt.subplot(1, 2, 1)
-plt.imshow(cv.cvtColor(flann_img, cv.COLOR_BGR2RGB))
-plt.title('BFMatcher')
+plt.subplot(1, 3, 1)
+plt.imshow(cv.cvtColor(img1, cv.COLOR_BGR2RGB))
+plt.title('img1.jpg')
 plt.axis('off')
 
-plt.subplot(1, 2, 2)
+plt.subplot(1, 3, 2)
+plt.imshow(cv.cvtColor(img2, cv.COLOR_BGR2RGB))
+plt.title('img2.jpg')
+plt.axis('off')
+
+# plt.subplot(1, 4, 3)
+# plt.imshow(cv.cvtColor(bf_img, cv.COLOR_BGR2RGB))
+# plt.title('BFMatcher')
+# plt.axis('off')
+
+plt.subplot(1, 3, 3)
 plt.imshow(cv.cvtColor(blend, cv.COLOR_BGR2RGB))
 plt.title('Alignment')
 plt.axis('off')
+
+# plt.subplot(1, 2, 1)
+# plt.imshow(cv.cvtColor(flann_img, cv.COLOR_BGR2RGB))
+# plt.title('Flann Matcher')
+# plt.axis('off')
+
+# plt.subplot(1, 2, 2)
+# plt.imshow(cv.cvtColor(blend, cv.COLOR_BGR2RGB))
+# plt.title('Alignment')
+# plt.axis('off')
 
 plt.show()

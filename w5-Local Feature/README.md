@@ -136,76 +136,82 @@
       ```python
               sift = cv.SIFT_create()
       ```
-    - cv.BFMatcher()를 사용하여 특징점을 매칭 (Outlier를 줄이기 위해 FlannBasedMatcher()로 대체)
+    - cv.BFMatcher()를 사용하여 특징점을 매칭 
       ```python
+            bf_matcher = cv.BFMatcher(cv.NORM_L2, crossCheck=False)
+            bf_knn_match = bf_matcher.knnMatch(des1, des2, k=2)
+            
             T=0.7
-      
-            FLANN_INDEX_KDTREE = 1
-            index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
-            search_params = dict(checks=50)
-            
-            flann_matcher = cv.FlannBasedMatcher(index_params, search_params)    # FlannBasedMatcher() 사용
-            flann_knn_match = flann_matcher.knnMatch(des1, des2, k=2)
-            
-            flann_good_match = []
-            for nearest1, nearest2 in flann_knn_match:
+            bf_good_match = []
+            for nearest1, nearest2 in bf_knn_match:
                 if(nearest1.distance/nearest2.distance)<T:
-                    flann_good_match.append(nearest1)
-
-           img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
-           flann_img = cv.drawMatches(img1, kp1, img2, kp2, flann_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+                    bf_good_match.append(nearest1)
+                    
+                    
+            img_match = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype=np.uint8)
+            bf_img = cv.drawMatches(img1, kp1, img2, kp2, bf_good_match, img_match, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
       ```
     - cv.findHomography()를 사용하여 호모그래피 행렬을 계산
       ```python
-            points1 = np.float32([kp1[m.queryIdx].pt for m in flann_good_match])
-            points2 = np.float32([kp2[m.trainIdx].pt for m in flann_good_match])
+            points1 = np.float32([kp1[m.queryIdx].pt for m in bf_good_match])    # queryIdx - img1의 매칭된 키포인트 인덱스
+            points2 = np.float32([kp2[m.trainIdx].pt for m in bf_good_match])    # trainIdx - img2의 매칭된 키포인트 인덱스
             
-            H,_= cv.findHomography(points1, points2, cv.RANSAC)
+            H,_= cv.findHomography(points1, points2, cv.RANSAC))
       ```
     - cv.warpPerspective()를 사용하여 한 이미지를 변환하여 다른 이미지와 정렬
       ```python
-            h1, w1 = img1.shape[:2]    # img1 모서리 정의
-            corners1 = np.float32([[0, 0], [w1, 0], [w1, h1], [0, h1]]).reshape(-1, 1, 2)
-            transformed_corners1 = cv.perspectiveTransform(corners1, H)
+            h1, w1 = img1.shape[:2] # img1의 세로(h1), 가로(w1) 크기를 가져옴 -> 이미지의 모서리 좌표를 지정하기 위해 필요 
+            corners1 = np.float32([[0, 0], [w1, 0], [w1, h1], [0, h1]]).reshape(-1, 1, 2)   #img1의 네 모서리를 H 행렬로 변형 
+            transformed_corners1 = cv.perspectiveTransform(corners1, H) # img1이 img2 시점으로 어떻게 왜곡되는지 계산 -> 정렬된 img1의 네 모서리 좌표가 반환됨 
             
             
-            h2, w2 = img2.shape[:2]    # img2의 모서리도 정의
+            h2, w2 = img2.shape[:2] # img2의 모서리도 정의 
             corners2 = np.float32([[0, 0], [w2, 0], [w2, h2], [0, h2]]).reshape(-1, 1, 2)
             
-            all_corners = np.concatenate((transformed_corners1, corners2), axis=0)
+            # 두 이미지의 전체 범위를 감싸는 새로운 캔버스 크기 계산 
+            all_corners = np.concatenate((transformed_corners1, corners2), axis=0)  # 변환된 img1의 모서리 + img2의 모서리 => 전체를 감싸는 새로운 범위를 계산하기 위함 
             [x_min, y_min] = np.int32(all_corners.min(axis=0).ravel() - 10)
             [x_max, y_max] = np.int32(all_corners.max(axis=0).ravel() + 10)
             
+            # 평행이동 변환 행렬 적용 (좌표가 음수가 되지 않도록) 
             new_width = x_max - x_min
             new_height = y_max - y_min
             
             translation_matrix = np.array([[1, 0, -x_min], [0, 1, -y_min], [0, 0, 1]]) 
-            H_translated = translation_matrix @ H
+            H_translated = translation_matrix @ H   # 기존 호모그래피 H에 translation을 곱해서 -> 최종적으로 이미지 정합을 할 때 음수 좌표를 피하고 + 새로운 캔버스 상에서 정확히 맞춰주는 행렬
             
             img1_aligned = cv.warpPerspective(img1, H_translated, (new_width, new_height))
 
       ```
     - 변환된 이미지를 원본 이미지와 비교하여 출력
       ```python
-            plt.subplot(1, 2, 1)
-            plt.imshow(cv.cvtColor(flann_img, cv.COLOR_BGR2RGB))
-            plt.title('Flann Matcher')
+            plt.figure(figsize=(18, 8))
+
+            plt.subplot(1, 4, 1)
+            plt.imshow(cv.cvtColor(img1, cv.COLOR_BGR2RGB))
+            plt.title('img1.jpg')
             plt.axis('off')
             
-            plt.subplot(1, 2, 2)
+            plt.subplot(1, 4, 2)
+            plt.imshow(cv.cvtColor(img2, cv.COLOR_BGR2RGB))
+            plt.title('img2.jpg')
+            plt.axis('off')
+            
+            plt.subplot(1, 4, 3)
             plt.imshow(cv.cvtColor(blend, cv.COLOR_BGR2RGB))
             plt.title('Alignment')
             plt.axis('off')
             
-            plt.show()
+            plt.subplot(1, 4, 4)
+            plt.imshow(cv.cvtColor(bf_img, cv.COLOR_BGR2RGB))
+            plt.title('BFMatcher')
+            plt.axis('off')
 
       ```
 
 
   #### 결과 화면
-  ![image](https://github.com/user-attachments/assets/54086277-e4ee-4dd3-aca2-29961c401809)
-  ![image](https://github.com/user-attachments/assets/62c911ac-9595-4b95-923c-2e35602b7d3e)
   ![image](https://github.com/user-attachments/assets/10bcfb4c-5544-4b6d-999b-30887db67a48)
   ![image](https://github.com/user-attachments/assets/d05bdd99-7705-4880-a062-0ba8e3733fdf)
 

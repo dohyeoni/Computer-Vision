@@ -10,6 +10,7 @@
     - cv.SIFT_create()를 사용하여 SIFT 객체 생성
       ```python
               sift = cv.SIFT_create()
+              sift = cv.SIFT_create(nfeatures=100)
       ```
     - detectAndCompute()를 사용하여 특징점 검출
       ```python
@@ -38,6 +39,9 @@
           
   #### 결과 화면
   ![image](https://github.com/user-attachments/assets/0e5138a2-633b-4a8a-8d69-e05b1798c0f9)
+  - SIFT_create() 매개변수 nfeatures=100으로 제한한 경우
+  ![image](https://github.com/user-attachments/assets/26d0d447-e43e-400f-8c16-f048e4f683b6)
+
   +) 원 크기의 의미: 원 크기는 특징점이 유효하게 검출된 지역의 크기를 의미한다.
   ![image](https://github.com/user-attachments/assets/5a6db344-4972-4e24-80be-aa6d4738829c)
   (출처: https://docs.opencv.org/4.x/da/df5/tutorial_py_sift_intro.html)

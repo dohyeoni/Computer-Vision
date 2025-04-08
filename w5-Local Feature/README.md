@@ -206,5 +206,9 @@
   #### 결과 화면
   ![image](https://github.com/user-attachments/assets/54086277-e4ee-4dd3-aca2-29961c401809)
   ![image](https://github.com/user-attachments/assets/62c911ac-9595-4b95-923c-2e35602b7d3e)
+  ![image](https://github.com/user-attachments/assets/10bcfb4c-5544-4b6d-999b-30887db67a48)
+  ![image](https://github.com/user-attachments/assets/d05bdd99-7705-4880-a062-0ba8e3733fdf)
+
+
 
 

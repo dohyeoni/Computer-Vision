@@ -1,6 +1,3 @@
-# mapping한 거 사진도 넣고
-# 두 개 붙인 거 사진 넣고
-
 import cv2 as cv
 import numpy as np
 import time

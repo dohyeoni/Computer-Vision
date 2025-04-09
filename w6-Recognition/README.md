@@ -5,36 +5,27 @@
     #### 요구사항
     - MNIST 데이터셋 로드
       ```python
-              img = cv.imread('soccer.jpg')
+              import tensorflow as tf
+              from tensorflow.keras.datasets import mnist
+
+
       ```
     - 데이터 훈련 세트와 테스트 세트로 분할
       ```python
-              sift = cv.SIFT_create()
-              sift = cv.SIFT_create(nfeatures=100)
+              # 데이터 불러오기
+              (x_train, y_train), (x_test, y_test) = mnist.load_data()
       ```
     - 간단한 신경망 모델 구축
       ```python
-              kp, des = sift.detectAndCompute(gray, None)    
+                model = Sequential([
+                Dense(128, activation='relu', input_shape=(784,)),  # 은닉층
+                Dense(10, activation='softmax')                     # 출력층: 숫자 0~9
+            ])  
       ```
     - 모델을 훈련시키고 정확도 평가하기
       ```python
-              gray = cv.drawKeypoints(gray, kp, None, flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)    # 특징점을 이미지에 시각화
-      ```
-    - matplotlib를 사용해 원본 이미지와 특징점이시각화된이미지를나란히출력
-      ```python
-              plt.figure(figsize=(10, 5))
+              model.fit(x_train, y_train, epochs=5, batch_size=32, validation_split=0.1)
 
-              plt.subplot(1, 2, 1)
-              plt.imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB))
-              plt.title('Original')
-              plt.axis('off')
-              
-              plt.subplot(1, 2, 2)
-              plt.imshow(gray)
-              plt.title('sift')
-              plt.axis('off')
-              
-              plt.show()
       ```
           
   #### 결과 화면

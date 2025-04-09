@@ -76,7 +76,21 @@
                       epochs=15,
     - 모델의 성능을 평가하고, 테스트 이미지에 대한 예측 수행하기
       ```python
-              test_loss, test_accuracy = model.evaluate(test_images, test_labels, verbose=2)
+               test_loss, test_accuracy = model.evaluate(test_images, test_labels, verbose=2)
+
+                # 5개 테스트 이미지에 대한 예측
+                predictions = model.predict(test_images[:5])
+                
+                plt.figure(figsize=(15, 3))
+                
+                for i in range(5):
+                    plt.subplot(1, 5, i + 1)
+                    plt.imshow(test_images[i])
+                    plt.title(f"prediction: {class_names[np.argmax(predictions[i])]}")
+                    plt.axis('off')
+                    
+                plt.tight_layout()
+                plt.show()
             
       ```
 

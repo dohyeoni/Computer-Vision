@@ -96,6 +96,8 @@
 
 
   #### 결과 화면
+  ![image](https://github.com/user-attachments/assets/1e69bc71-302c-4452-ade7-a278ebc5f9d0)
+
 
 
 ---

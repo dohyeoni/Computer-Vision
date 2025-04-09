@@ -76,6 +76,7 @@
                       epochs=15,
     - 모델의 성능을 평가하고, 테스트 이미지에 대한 예측 수행하기
       ```python
+              test_loss, test_accuracy = model.evaluate(test_images, test_labels, verbose=2)
             
       ```
 

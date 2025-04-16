@@ -37,22 +37,22 @@
 
 ---
       
-# 02. CIFAR-10 데이터셋을 활용한 CNN 모델 구축
+# 02. Mediapipe를 활용한 얼굴 랜드마크 추출 및 시각화
 
-- CIFAR-10 데이터셋을 활용하여 CNN을 구축하고, 이미지 분류를 수행
+- Mediapipe의 FaceMesh 모듈을 사용하여 얼굴의 468개 랜드마크를 추출하고, 이를 실시간 영상에 시각화하는 프로그램 구현하기
 
     #### 요구사항
-    - CIFAR-10 데이터셋 로드
+    - Mediapipe의 FaceMesh 모듈을 사용하여 얼굴 랜드마크 검출기를 초기화 한다.
        ```python
                 import tensorflow as tf
                 from tensorflow import keras
                 from keras.datasets import cifar10
        ```
-    - 데이터 전처리(정규화 등) 수행
+    - OpenCV를 사용하여 웹캠으로부터 실시간 영상을 캡처한다.
       ```python
               train_images, test_images= train_images/ 255.0, test_images/ 255.0
       ```
-    - CNN 모델을 설계하고 훈련하기기
+    - 검출된 얼굴 랜드마크를 실시간 영상에 점으로 표시한다.
       ```python
             model = models.Sequential()
 
@@ -76,7 +76,7 @@
             model.fit(train_images, 
                       train_labels, 
                       epochs=15,
-    - 모델의 성능을 평가하고, 테스트 이미지에 대한 예측 수행하기
+    - ESC 키를 누르면 프로그램이 종료되도록 설정한다.
       ```python
                test_loss, test_accuracy = model.evaluate(test_images, test_labels, verbose=2)
 

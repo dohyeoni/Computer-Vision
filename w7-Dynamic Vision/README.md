@@ -55,14 +55,14 @@
       ```
     - 객체 추적: 각 프레임마다 검출된 객체와 기존 추적 객체를 연관시켜 추적을 유지한다.
       ```python
-                model = Sequential([
-                Dense(128, activation='relu', input_shape=(784,)),  # 은닉층
-                Dense(10, activation='softmax')                     # 출력층: 숫자 0~9
-            ])  
+                tracks=sort.update(np.array(detected_objects))
       ```
     - 결과 시각화: 추적된 각 객체에 고유 ID를 부여하고, 해당 ID와 경계 상자를 비디오 프레임에 표시하여 실시간으로 출력한다.
       ```python
-              model.fit(x_train, y_train, epochs=5, batch_size=32, validation_split=0.1)
+              for i in range(len(tracks)):
+                x1, y1, x2, y2, track_id = tracks[i].astype(int)
+                cv.rectangle(frame, (x1,y1), (x2,y2), colors[track_id], 2)
+                cv.putText(frame, str(track_id), (x1+10, y1+40), cv.FONT_HERSHEY_PLAIN, 3, colors[track_id], 2)
 
       ```
           

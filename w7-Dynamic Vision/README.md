@@ -1,4 +1,4 @@
-# 01.  SORT 알고리즘을 활용한 다중 객체 추적기 구현
+![스크린샷 2025-04-15 212418](https://github.com/user-attachments/assets/528f70a9-d5f1-47ee-9ac7-7ef0317941c4)# 01.  SORT 알고리즘을 활용한 다중 객체 추적기 구현
 
 - SORT 알고리즘을 사용하여 비디오에서 다중 객체를 실시간으로 추적하는 프로그램 구현하기
 
@@ -122,7 +122,8 @@
 
 
   #### 결과 화면
-  ![image](https://github.com/user-attachments/assets/1e69bc71-302c-4452-ade7-a278ebc5f9d0)
+  ![스크린샷 2025-04-15 212418](https://github.com/user-attachments/assets/ca1130fb-0538-42e1-9550-d8e63deb3cf5)
+
   ![image](https://github.com/user-attachments/assets/cae74182-60ba-43ed-8742-b15a6ff88d16)
 
 

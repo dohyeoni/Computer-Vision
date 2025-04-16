@@ -114,21 +114,8 @@
                                                   )
     - ESC 키를 누르면 프로그램이 종료되도록 설정한다.
       ```python
-               test_loss, test_accuracy = model.evaluate(test_images, test_labels, verbose=2)
-
-                # 5개 테스트 이미지에 대한 예측
-                predictions = model.predict(test_images[:5])
-                
-                plt.figure(figsize=(15, 3))
-                
-                for i in range(5):
-                    plt.subplot(1, 5, i + 1)
-                    plt.imshow(test_images[i])
-                    plt.title(f"prediction: {class_names[np.argmax(predictions[i])]}")
-                    plt.axis('off')
-                    
-                plt.tight_layout()
-                plt.show()
+                if cv.waitKey(5) == 27:
+                    break
             
       ```
 

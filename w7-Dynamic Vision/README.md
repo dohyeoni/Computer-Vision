@@ -5,8 +5,42 @@
     #### 요구사항
     - 객체 검출기 구현: YOLOv4와 같은 사전 훈련된 객체 검출 모델을 사용하여 각 프레임에서 객체를 검출한다.
       ```python
-              import tensorflow as tf
-              from tensorflow.keras.datasets import mnist
+           def construct_yolo_v4():
+                f = open('coco_names.txt', 'r')
+                class_name = [line.strip() for line in f.readlines()]
+                
+                model = cv.dnn.readNet('yolov4.weights', 'yolov4.cfg')
+                layer_name = model.getLayerNames()
+                out_layers = [layer_name[i-1] for i in model.getUnconnectedOutLayers()]
+                
+                return model, out_layers, class_name
+            
+            def yolo_detect(img, yolo_model, out_layers):
+                height, width = img.shape[0], img.shape[1]
+                test_img = cv.dnn.blobFromImage(img, 1.0/256, (448,448), (0,0,0), swapRB=True)
+                
+                yolo_model.setInput(test_img)
+                output3 = yolo_model.forward(out_layers)
+                
+                box, conf, id = [], [], []
+                for output in output3:
+                    for vec85 in output:
+                        scores = vec85[5:]
+                        class_id = np.argmax(scores)
+                        confidence = scores[class_id]
+                        if confidence>0.5:
+                            centerx, centery = int(vec85[0]*width), int(vec85[1]*height)
+                            w, h =int(vec85[2]*width), int(vec85[3]*height)
+                            x, y = int(centerx-w/2), int(centery-h/2)
+                            box.append([x,y,x+w, y+h])
+                            conf.append(float(confidence))
+                            id.append(class_id)
+                            
+                ind = cv.dnn.NMSBoxes(box, conf, 0.5, 0.4)
+                objects = [box[i]+[conf[i]]+[id[i]] for i in range(len(box)) if i in ind]
+                return objects
+            
+            model, out_layers, class_names = construct_yolo_v4()
 
 
       ```

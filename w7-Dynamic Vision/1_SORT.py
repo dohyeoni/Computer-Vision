@@ -51,12 +51,12 @@ while True:
     if not ret: sys.exit('프레임 획득에 실해하여 루프를 나갑니다.')
      
     res = yolo_detect(frame, model, out_layers)
-    persons = [res[i] for i in range(len(res)) if res[i][5] in [0,2]]
+    detected_objects = [res[i] for i in range(len(res)) if res[i][5] in [0,2]]
     
-    if len(persons)==0:
+    if len(detected_objects)==0:
         tracks = sort.update()
     else:
-        tracks=sort.update(np.array(persons))
+        tracks=sort.update(np.array(detected_objects))
     
     for i in range(len(tracks)):
         x1, y1, x2, y2, track_id = tracks[i].astype(int)

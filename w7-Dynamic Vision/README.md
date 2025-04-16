@@ -68,7 +68,7 @@
           
   #### 결과 화면
   ![스크린샷 2025-04-16 110627](https://github.com/user-attachments/assets/c6b2c4ae-ffcf-481c-9c25-988f92a25101)
-![스크린샷 2025-04-16 110700](https://github.com/user-attachments/assets/ba49ea07-23c6-4f72-871a-43d20e95508f)
+  ![스크린샷 2025-04-16 110700](https://github.com/user-attachments/assets/ba49ea07-23c6-4f72-871a-43d20e95508f)
 
 
 

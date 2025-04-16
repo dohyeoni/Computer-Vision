@@ -63,8 +63,9 @@
       ```
           
   #### 결과 화면
-  ![image](https://github.com/user-attachments/assets/2ab9c735-c8d4-40ce-9b46-657c1cd51329)
-  ![image](https://github.com/user-attachments/assets/ff77f374-650d-4126-bcc2-e34dbba37bec)
+  ![스크린샷 2025-04-16 110627](https://github.com/user-attachments/assets/c6b2c4ae-ffcf-481c-9c25-988f92a25101)
+![스크린샷 2025-04-16 110700](https://github.com/user-attachments/assets/ba49ea07-23c6-4f72-871a-43d20e95508f)
+
 
 
 

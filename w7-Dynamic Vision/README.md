@@ -78,38 +78,40 @@
     #### 요구사항
     - Mediapipe의 FaceMesh 모듈을 사용하여 얼굴 랜드마크 검출기를 초기화 한다.
        ```python
-                import tensorflow as tf
-                from tensorflow import keras
-                from keras.datasets import cifar10
+                mp_mesh = mp.solutions.face_mesh
+                mp_drawing = mp.solutions.drawing_utils
+                mp_styles = mp.solutions.drawing_styles
+                
+                mesh = mp_mesh.FaceMesh(max_num_faces=2, refine_landmarks=True, min_detection_confidence=0.5, min_tracking_confidence=0.5)
        ```
     - OpenCV를 사용하여 웹캠으로부터 실시간 영상을 캡처한다.
       ```python
-              train_images, test_images= train_images/ 255.0, test_images/ 255.0
+              cap = cv.VideoCapture(0, cv.CAP_DSHOW)
       ```
     - 검출된 얼굴 랜드마크를 실시간 영상에 점으로 표시한다.
       ```python
-            model = models.Sequential()
-
-            model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)))
-            model.add(layers.MaxPooling2D((2, 2)))
-            model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-            model.add(layers.MaxPooling2D(2, 2))
-            model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-            
-            model.add(layers.Flatten())
-            model.add(layers.Dense(64, activation='relu'))
-            model.add(layers.Dropout(0.5))  # 50% 뉴런 비활성화
-            model.add(layers.Dense(10, activation='softmax'))
-            
-            model.summary()
-            
-            model.compile(optimizer='adam',
-                          loss='sparse_categorical_crossentropy',
-                          metrics=['accuracy'])
-            
-            model.fit(train_images, 
-                      train_labels, 
-                      epochs=15,
+                if res.multi_face_landmarks:
+                    for landmarks in res.multi_face_landmarks:
+                        mp_drawing.draw_landmarks(image=frame, 
+                                                  landmark_list=landmarks, 
+                                                  connections=mp_mesh.FACEMESH_TESSELATION, 
+                                                  landmark_drawing_spec=None, 
+                                                #   connection_drawing_spec=mp_styles.get_default_face_mesh_tesselation_style()
+                                                )
+                        
+                        mp_drawing.draw_landmarks(image=frame, 
+                                                  landmark_list=landmarks, 
+                                                  connections=mp_mesh.FACEMESH_CONTOURS, 
+                                                  landmark_drawing_spec=None, 
+                                                #   connection_drawing_spec=mp_styles.get_default_face_mesh_contours_style()
+                                                  )
+                        
+                        mp_drawing.draw_landmarks(image=frame, 
+                                                  landmark_list=landmarks, 
+                                                  connections=mp_mesh.FACEMESH_IRISES, 
+                                                  landmark_drawing_spec=None, 
+                                                #   connection_drawing_spec=mp_styles.get_default_face_mesh_iris_style()
+                                                  )
     - ESC 키를 누르면 프로그램이 종료되도록 설정한다.
       ```python
                test_loss, test_accuracy = model.evaluate(test_images, test_labels, verbose=2)

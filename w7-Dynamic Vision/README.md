@@ -46,8 +46,12 @@
       ```
     - mathworks.comSORT 추적기 초기화: 검출된 객체의 경계 상자를 입력으로 받아 SORT 추적기를 초기화 한다.
       ```python
-              # 데이터 불러오기
-              (x_train, y_train), (x_test, y_test) = mnist.load_data()
+                detected_objects = [res[i] for i in range(len(res)) if res[i][5] in [0,2]]
+    
+                if len(detected_objects)==0:
+                    tracks = sort.update()
+                else:
+                    tracks=sort.update(np.array(detected_objects))
       ```
     - 객체 추적: 각 프레임마다 검출된 객체와 기존 추적 객체를 연관시켜 추적을 유지한다.
       ```python

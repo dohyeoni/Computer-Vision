@@ -95,5 +95,16 @@
         new_y2 = plate_y2 - cy1
       ```
       - 주어진 차량 이미지 안의 상대 위치로 번호판 좌표를 변환
+    - 번호판 합성
+      ``` python
+        plate_img = random.choice(plate_files)
+        plate_resized = cv2.resize(plate_img, (pw, ph))
+        img[new_y1:new_y2, new_x1:new_x2] = plate_resized
+      ```
+      - 번호판 이미지 중 하나를 랜덤으로 선택
+      - 번호판 bbox 크기에 맞게 리사이즈
+      - 차량 이미지에 부착
+
+
 
 

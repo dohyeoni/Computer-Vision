@@ -74,11 +74,13 @@
       ```
 
     - 사용할 JSON 파일 목록 불러오기
+    
       ``` python
         json_files = [f for f in os.listdir(JSON_LABEL_DIR) if f.endswith(".json")]
       ```
 
     - 차량 bbox + 번호판 bbox 추출
+    
       ``` python
         car_pts = data['car']['bbox']
         plate_pts = data['plate']['bbox']

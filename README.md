@@ -19,7 +19,7 @@
       - ```NotoSansKR-Medium.ttf```: 숫자용 글씨체
 
 ## 실행 방법
-/*create_plate.py*/
+###create_plate.py
   - 요약
     1. 번호판 종류 결정
     2. 랜덤 글자 조합 (숫자 + 한글 + 숫자)

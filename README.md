@@ -68,4 +68,30 @@
     6. 결과 이미지 저장
       
   **메인 함수 ```genetate_synthetic_from_json()```**
-  
+    - 사용할 번호판 이미지 불러오기
+      ``` python
+        plate_files = [os.path.join(PLATE_IMAGE_DIR, f) for f in os.listdir(PLATE_IMAGE_DIR) if f.endswith(('.png', '.jpg'))]
+      ```
+
+    - 사용할 JSON 파일 목록 불러오기
+      ``` python
+        json_files = [f for f in os.listdir(JSON_LABEL_DIR) if f.endswith(".json")]
+      ```
+
+    - 차량 bbox + 번호판 bbox 추출
+      ``` python
+        car_pts = data['car']['bbox']
+        plate_pts = data['plate']['bbox']
+      ```
+      - 좌표를 (x1, y1), (x2, y2) 형태로 정리
+      - 좌표의 순서가 꼬이지 않게 정렬
+    - 번호판 bbox 좌표 전환
+      ``` python
+        new_x1 = plate_x1 - cx1
+        new_y1 = plate_y1 - cy1
+        new_x2 = plate_x2 - cx1
+        new_y2 = plate_y2 - cy1
+      ```
+      - 주어진 차량 이미지 안의 상대 위치로 번호판 좌표를 변환
+
+
